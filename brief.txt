@@ -1,0 +1,36 @@
+# Ctrl+V Hackathon
+
+## Overview
+Online hackathon by ADHAYAN on Devpost (https://ctrl-v-hackathon-31831.devpost.com).
+Theme: Use AI + tech to improve access (education, healthcare, info, jobs, gov services, disability accessibility, etc.).
+Tagline idea: "Ctrl+V" = transfer information fast -> your project should help people reach what they need faster.
+Participants: ~215 participants.
+Submission deadline: 10 Nov 2026, 23:59 UTC.
+
+## What to build
+Must:
+1. Tackle a real access / accessibility problem
+2. Use technology at the core
+3. Be built during the hackathon
+4. Ship a working prototype, demo, or POC
+Allowed shapes: web, mobile, dev tools, edtech, community tools, etc.
+
+## What to submit
+- Project name
+- Short + detailed description (problem, why it matters, how it works)
+- Demo video (under 3-5 min)
+- Technologies used
+- Screenshots
+- Project link / GitHub
+
+## Judging Criteria (weights)
+- Impact: 30%
+- Innovation: 25%
+- Technical implementation: 25%
+- User experience: 10%
+- Presentation: 10%
+Tie-breaking: Impact, then Innovation.
+
+## Sponsor & Focus
+Adaption Platform credits sponsor (AutoScientist, Adaptive Data, 242 languages).
+Individual/solo developer.
