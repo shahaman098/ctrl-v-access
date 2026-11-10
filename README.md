@@ -84,14 +84,28 @@ The platform includes 4 authentic, pre-loaded case studies for instant 1-click e
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack & Full-Stack Architecture
 
+### Frontend
 - **Framework:** React 18, TypeScript 5.7, Vite 6
 - **Styling:** Tailwind CSS, PostCSS, Autoprefixer
 - **Icons & Accessibility:** Lucide React, WAI-ARIA 1.2 compliant semantics
 - **Audio:** Web Speech Synthesis API
 - **Clipboard:** Asynchronous Clipboard API (`navigator.clipboard`) with WCAG-compliant live status regions
-- **Testing & Tooling:** Playwright, Chrome DevTools Protocol, FFmpeg
+
+### Backend & AI Engine
+- **Server:** Node.js, Express, CORS, TypeScript (`server/index.ts`)
+- **AI Models:** Google Gemini 3.8 Flash via official `@google/genai` SDK
+- **Offline Fallback:** Hybrid algorithmic NLP & Flesch-Kincaid formula calculator
+- **REST Endpoints:**
+  - `GET /api/health`: Health status and active LLM configuration
+  - `POST /api/analyze`: Dual-engine multi-tier equalization
+  - `POST /api/rights/search`: Statutory rights search engine
+  - `POST /api/appeal/generate`: Custom petition drafting service
+  - `POST /api/adaption/dataset`: Synthetic dataset synthesizer for Adaption Platform
+
+### Tooling & Automation
+- **Testing & Recording:** Playwright, Chrome DevTools Protocol, FFmpeg
 
 ---
 
@@ -105,13 +119,14 @@ cd ctrl-v-access
 # Install dependencies
 npm install
 
-# Start local development server
+# Start Backend API server (Port 3001)
+npm run server
+
+# In a separate terminal, start Frontend (Port 3000)
 npm run dev
 
-# Build for production
+# Or build & preview full production stack
 npm run build
-
-# Preview production build
 npm run preview
 ```
 

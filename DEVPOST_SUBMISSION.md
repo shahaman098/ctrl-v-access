@@ -41,10 +41,16 @@ When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to i
 ---
 
 ## How We Built It
-- **Frontend Core:** Built with React 18, TypeScript, and Vite for sub-second hot reloading and instant client-side performance.
+- **Full-Stack Architecture:** Built with a decoupled, high-performance Node.js / Express REST API backend (`server/index.ts`) paired with a React 18, TypeScript, and Vite single-page application frontend.
+- **AI & Equalizer Engine:** Powered by Google Gemini 3.8 Flash via the `@google/genai` SDK for deep legal and medical document synthesis, backed by a resilient offline rule-based NLP engine that calculates real-time Flesch-Kincaid grade reductions and demystifies jargon even in disconnected environments.
+- **RESTful Endpoints:**
+  - `GET /api/health`: Real-time backend status, latency metrics, and active LLM configuration.
+  - `POST /api/analyze`: Dual-engine document equalization endpoint with automatic fallback.
+  - `POST /api/rights/search`: Searchable statutory rights database querying NICE clinical guidelines, PIP regulations, and Equality Act precedents.
+  - `POST /api/appeal/generate`: Custom petition and appeal letter drafting service.
+  - `POST /api/adaption/dataset`: Synthetic accessibility benchmark generator inspired by sponsor Adaption Platform's Adaptive Data initiative.
 - **Styling & Assistive UI:** Designed with Tailwind CSS, supporting dynamic font sizing, high-contrast themes, and responsive layouts.
 - **Accessibility & UX:** Integrated WAI-ARIA 1.2 landmarks, polite live regions for clipboard status, and accessible button components adhering to web development guidance.
-- **Document Analysis Engine:** Custom on-device NLP and readability heuristics that compute Flesch-Kincaid grade levels, detect time limits and jargon, and structure multi-tier outputs.
 - **Tooling & Automation:** Screen captures and demo recording powered by Playwright and FFmpeg.
 
 ---
@@ -77,6 +83,10 @@ Accessible design isn't just about color contrast—it's about cognitive accessi
 ## Built With
 - `react`
 - `typescript`
+- `node.js`
+- `express`
+- `google-gemini-api`
+- `@google/genai`
 - `vite`
 - `tailwindcss`
 - `lucide-react`

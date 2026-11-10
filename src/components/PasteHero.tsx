@@ -18,12 +18,18 @@ interface PasteHeroProps {
   onAnalyze: (text: string) => void;
   onSelectScenario: (scenario: DocumentAnalysis) => void;
   currentDocumentId?: string;
+  isAnalyzing?: boolean;
+  activeModel?: string;
+  backendOnline?: boolean;
 }
 
 export const PasteHero: React.FC<PasteHeroProps> = ({ 
   onAnalyze, 
   onSelectScenario,
-  currentDocumentId 
+  currentDocumentId,
+  isAnalyzing = false,
+  activeModel = 'gemini-3.8-flash',
+  backendOnline = true
 }) => {
   const [activeMode, setActiveMode] = useState<'paste' | 'search'>('paste');
   const [inputText, setInputText] = useState('');
@@ -212,15 +218,21 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
             />
 
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-              <div className="flex items-center gap-2 text-xs text-slate-400">
-                <kbd className="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono text-[11px]">
-                  Ctrl + V
-                </kbd>
-                <span>Instant Universal Equalizer Trigger</span>
+              <div className="flex items-center gap-3 text-xs text-slate-400">
+                <div className="flex items-center gap-1.5">
+                  <kbd className="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono text-[11px]">
+                    Ctrl + V
+                  </kbd>
+                  <span className="hidden sm:inline">Instant Equalizer Trigger</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-indigo-300">
+                  <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+                  <span>{backendOnline ? 'AI Backend Online' : 'Client Mode'}</span>
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
-                {inputText.trim().length > 0 && (
+                {inputText.trim().length > 0 && !isAnalyzing && (
                   <button
                     type="button"
                     onClick={() => setInputText('')}
@@ -231,11 +243,20 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                 )}
                 <button
                   type="submit"
-                  disabled={inputText.trim().length === 0}
-                  className="flex items-center gap-1.5 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg shadow-emerald-600/20 transition-all focus-visible:ring-2 focus-visible:ring-emerald-400"
+                  disabled={inputText.trim().length === 0 || isAnalyzing}
+                  className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg shadow-emerald-600/20 transition-all focus-visible:ring-2 focus-visible:ring-emerald-400"
                 >
-                  <span>Decode & Equalize</span>
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  {isAnalyzing ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <span>Equalizing via AI Backend...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Decode & Equalize</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </>
+                  )}
                 </button>
               </div>
             </div>
