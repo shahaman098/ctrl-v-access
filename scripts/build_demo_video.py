@@ -291,7 +291,7 @@ NUMS = dict(zip('0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20'.split(),
 
 def norm(w):
     w = re.sub(r'[^a-z0-9]', '', w.lower())
-    return NUMS.get(w, w)
+    return {'ctrl': 'control'}.get(w, NUMS.get(w, w))
 
 def script_scenes():
     """Narration text for each scene, read from video/DEMO_SCRIPT.md."""
