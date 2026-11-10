@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-dyslexic: 'Lexend', 'Comic Sans MS', sans-serif;
+  }
+
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* High contrast mode overrides */
+  .high-contrast {
+    --tw-bg-opacity: 1;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .high-contrast .border-slate-800,
+  .high-contrast .border-slate-700 {
+    border-color: #ffff00 !important;
+  }
+
+  .high-contrast .text-slate-400,
+  .high-contrast .text-slate-300 {
+    color: #ffffff !important;
+  }
+
+  .high-contrast .bg-slate-900,
+  .high-contrast .bg-slate-800 {
+    background-color: #000000 !important;
+    border: 2px solid #ffff00 !important;
+  }
+
+  /* Dyslexia mode overrides */
+  .dyslexia-font {
+    font-family: var(--font-dyslexic) !important;
+    letter-spacing: 0.05em !important;
+    word-spacing: 0.15em !important;
+    line-height: 1.8 !important;
+  }
+
+  /* Focus visible accessibility styling */
+  *:focus-visible {
+    outline: 2px solid #818cf8 !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Bionic reading mode styles */
+.bionic-reading b,
+.bionic-reading strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bionic-reading span.bionic-rest {
+  opacity: 0.85;
+}
+
+/* Pulse glow animation for the Ctrl+V trigger */
+@keyframes paste-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+  }
+}
+
+.animate-paste-glow {
+  animation: paste-glow 2.5s infinite ease-in-out;
+}
