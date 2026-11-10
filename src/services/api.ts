@@ -57,7 +57,7 @@ export async function analyzeDocumentWithBackend(
       body: JSON.stringify({
         text,
         apiKey: customApiKey,
-        model: model || 'gemini-3.8-flash',
+        model: model || 'gemini-3.5-flash-lite',
         language: language || 'en'
       })
     });

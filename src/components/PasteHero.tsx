@@ -121,37 +121,35 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
       aria-label="Document Paste and Equalizer Input"
       className="max-w-6xl mx-auto px-4 py-8"
     >
-      {/* Hero Headline & Value Proposition */}
-      <div className="text-center max-w-3xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 text-xs font-semibold mb-4">
-          <Sparkles className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />
-          <span>Ctrl+V Hackathon Edition — Accessibility & Civic Equalizer</span>
-        </div>
-
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-          The Instant <span className="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-transparent">Information Bridge</span> for Inaccessible Bureaucracy
+      {/* Hero: NHS.UK-style blue panel */}
+      <div className="bg-nhs-blue text-white px-6 py-8 sm:px-10 sm:py-9 mb-8">
+        <p className="text-lg font-semibold text-white/90 mb-2 flex items-center gap-2">
+          <Sparkles className="w-4 h-4" aria-hidden="true" />
+          <span>Ctrl+V Hackathon 2026 · Accessibility and civic rights</span>
+        </p>
+        <h1 className="text-3xl sm:text-[42px] font-bold text-white leading-tight mb-4 max-w-4xl">
+          The instant information bridge for inaccessible bureaucracy
         </h1>
-
-        <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-          Hit <kbd className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-indigo-300 font-mono text-sm shadow-sm">Ctrl+V</kbd> with any medical bill, disability denial, university accommodation refusal, or search official citizen rights. Instantly receive <strong>5th-grade clarity</strong>, <strong>statutory rights</strong>, <strong>voice narration</strong>, and a <strong>ready-to-send winning appeal</strong>.
+        <p className="text-white text-lg leading-relaxed max-w-4xl">
+          Press <kbd className="px-2 py-0.5 rounded bg-white text-nhs-blue font-mono text-base font-bold">Ctrl+V</kbd> with any medical letter, disability decision, university refusal or housing notice. You get <strong>plain English</strong>, <strong>your rights</strong>, <strong>audio narration</strong> and a <strong>ready-to-send appeal</strong>.
         </p>
       </div>
 
       {/* Main Container with Mode Switcher */}
       <div 
-        className="relative bg-slate-900/90 rounded-2xl border-2 border-indigo-500/50 hover:border-indigo-400 transition-all p-6 shadow-2xl backdrop-blur-xl group"
+        className="relative bg-white border border-nhs-grey4 p-6 group"
       >
         {/* Mode Selector Tabs */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-800">
-          <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-nhs-grey4">
+          <div className="flex items-center gap-2 bg-nhs-grey5 p-1 rounded border border-nhs-grey4">
             <button
               type="button"
               onClick={() => setActiveMode('paste')}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                activeMode === 'paste'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
-              }`}
+ activeMode === 'paste'
+ ? 'bg-nhs-blue text-white '
+ : 'text-nhs-blue hover:bg-white hover:underline'
+ }`}
               aria-pressed={activeMode === 'paste'}
             >
               <Clipboard className="w-4 h-4" aria-hidden="true" />
@@ -165,10 +163,10 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                 setTimeout(() => searchInputRef.current?.focus(), 100);
               }}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-                activeMode === 'search'
-                  ? 'bg-indigo-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
-              }`}
+ activeMode === 'search'
+ ? 'bg-nhs-blue text-white '
+ : 'text-nhs-blue hover:bg-white hover:underline'
+ }`}
               aria-pressed={activeMode === 'search'}
             >
               <Search className="w-4 h-4" aria-hidden="true" />
@@ -180,10 +178,10 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
             <button
               type="button"
               onClick={handleManualPasteClick}
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/40 rounded-xl text-xs font-semibold shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-indigo-300"
+              className="flex items-center gap-2 px-4 py-2 bg-nhs-bluetint hover:bg-nhs-bluetint text-nhs-blue border border-nhs-blue rounded text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-nhs-yellow"
               aria-label="Paste text from computer clipboard"
             >
-              <Clipboard className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />
+              <Clipboard className="w-3.5 h-3.5 text-nhs-blue" aria-hidden="true" />
               <span>Paste from Clipboard</span>
             </button>
           </div>
@@ -194,9 +192,9 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
           <div 
             role="status" 
             aria-live="polite"
-            className="mb-4 p-3 bg-indigo-950/80 border border-indigo-500/50 rounded-xl text-indigo-200 text-xs flex items-center gap-2 animate-fadeIn"
+            className="mb-4 p-3 bg-nhs-bluetint border border-nhs-blue rounded text-nhs-blue text-xs flex items-center gap-2 animate-fadeIn"
           >
-            <Sparkles className="w-4 h-4 text-indigo-400 shrink-0" aria-hidden="true" />
+            <Sparkles className="w-4 h-4 text-nhs-blue shrink-0" aria-hidden="true" />
             <span>{pasteNotice}</span>
           </div>
         )}
@@ -214,19 +212,19 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Paste your dense denial letter, NHS decision, university notice, or benefit rejection here..."
-              className="w-full bg-slate-950/70 border border-slate-800 rounded-xl p-4 text-slate-200 placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 font-mono transition-colors resize-y leading-relaxed"
+              className="w-full bg-white border-2 border-nhs-secondary p-4 text-nhs-text text-base placeholder:text-nhs-secondary text-sm focus:outline-none focus:border-nhs-blue focus:ring-1 focus:ring-nhs-yellow font-mono transition-colors resize-y leading-relaxed"
             />
 
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-              <div className="flex items-center gap-3 text-xs text-slate-400">
+              <div className="flex items-center gap-3 text-xs text-nhs-secondary">
                 <div className="flex items-center gap-1.5">
-                  <kbd className="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono text-[11px]">
+                  <kbd className="px-2 py-1 bg-nhs-grey5 border border-nhs-grey4 rounded text-nhs-text font-mono text-xs">
                     Ctrl + V
                   </kbd>
                   <span className="hidden sm:inline">Instant Equalizer Trigger</span>
                 </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-indigo-300">
-                  <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white border border-nhs-grey4 text-xs text-nhs-blue">
+                  <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-nhs-green animate-pulse' : 'bg-nhs-warmyellow'}`}></span>
                   <span>{backendOnline ? 'AI Backend Online' : 'Client Mode'}</span>
                 </div>
               </div>
@@ -236,7 +234,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                   <button
                     type="button"
                     onClick={() => setInputText('')}
-                    className="px-3 py-1.5 text-xs text-slate-400 hover:text-white transition-colors"
+                    className="px-3 py-1.5 text-xs text-nhs-secondary hover:text-nhs-blue transition-colors"
                   >
                     Clear Box
                   </button>
@@ -244,7 +242,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                 <button
                   type="submit"
                   disabled={inputText.trim().length === 0 || isAnalyzing}
-                  className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg shadow-emerald-600/20 transition-all focus-visible:ring-2 focus-visible:ring-emerald-400"
+                  className="flex items-center gap-2 nhs-button px-5 py-2.5 bg-nhs-green hover:bg-nhs-hovergreen disabled:opacity-40 disabled:hover:bg-nhs-grey3 text-white rounded text-sm font-semibold transition-all focus-visible:ring-2 focus-visible:ring-nhs-yellow"
                 >
                   {isAnalyzing ? (
                     <>
@@ -271,7 +269,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                 Search statutory citizen rights, regulations, and entitlements
               </label>
               <div className="relative flex items-center">
-                <Search className="w-5 h-5 text-indigo-400 absolute left-4 pointer-events-none" aria-hidden="true" />
+                <Search className="w-5 h-5 text-nhs-blue absolute left-4 pointer-events-none" aria-hidden="true" />
                 <input
                   id="rights-search-input"
                   ref={searchInputRef}
@@ -279,13 +277,13 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search condition or statute (e.g., 'glucose monitor', 'PIP 0 points', 'warm home', 'free prescription')..."
-                  className="w-full bg-slate-950/80 border border-indigo-500/40 rounded-xl py-3.5 pl-12 pr-28 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-all"
+                  className="w-full bg-nhs-grey5 border border-nhs-blue rounded py-3.5 pl-12 pr-28 text-nhs-text placeholder:text-nhs-secondary text-sm focus:outline-none focus:border-nhs-blue focus:ring-1 focus:ring-nhs-yellow transition-all"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-24 p-1 text-slate-400 hover:text-white transition-colors"
+                    className="absolute right-24 p-1 text-nhs-secondary hover:text-nhs-blue transition-colors"
                     aria-label="Clear search query"
                   >
                     <X className="w-4 h-4" aria-hidden="true" />
@@ -293,7 +291,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                 )}
                 <button
                   type="submit"
-                  className="absolute right-2 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow transition-colors"
+                  className="absolute right-2 px-3.5 py-1.5 bg-nhs-blue hover:bg-nhs-darkblue text-white text-xs font-semibold rounded-lg transition-colors"
                 >
                   Search
                 </button>
@@ -302,8 +300,8 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
 
             {/* Quick Keyword Filter Chips */}
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              <span className="text-[11px] font-semibold text-slate-400 mr-1 flex items-center gap-1">
-                <SlidersHorizontal className="w-3 h-3 text-indigo-400" aria-hidden="true" />
+              <span className="text-xs font-semibold text-nhs-secondary mr-1 flex items-center gap-1">
+                <SlidersHorizontal className="w-3 h-3 text-nhs-blue" aria-hidden="true" />
                 Quick filter:
               </span>
               {[
@@ -318,11 +316,11 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                   key={cat.value}
                   type="button"
                   onClick={() => setSelectedCategory(cat.value)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors ${
-                    selectedCategory === cat.value
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'
-                  }`}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+ selectedCategory === cat.value
+ ? 'bg-nhs-blue text-white'
+ : 'bg-nhs-grey5 text-nhs-text hover:bg-nhs-grey4'
+ }`}
                 >
                   {cat.label}
                 </button>
@@ -338,7 +336,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
               <div 
                 role="status" 
                 aria-live="polite" 
-                className="text-[11px] text-slate-400 pb-1"
+                className="text-xs text-nhs-secondary pb-1"
               >
                 Showing {filteredSearchResults.length} statutory guidance & rights cases:
               </div>
@@ -348,21 +346,21 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                   <div
                     key={item.id}
                     onClick={() => onSelectScenario(item.documentAnalysis)}
-                    className="p-3.5 bg-slate-950/70 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="p-3.5 bg-nhs-grey5 border border-nhs-grey4 hover:border-nhs-blue rounded transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-indigo-300">
+                        <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-nhs-grey5 text-nhs-blue">
                           {item.category}
                         </span>
-                        <span className="text-[11px] font-mono text-emerald-400">
+                        <span className="text-xs font-mono text-nhs-green">
                           {item.statutoryAuthority}
                         </span>
                       </div>
-                      <h3 className="text-xs sm:text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                      <h3 className="text-xs sm:text-sm font-semibold text-nhs-text group-hover:text-nhs-blue transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">
+                      <p className="text-xs text-nhs-secondary leading-relaxed line-clamp-2">
                         {item.summary}
                       </p>
                     </div>
@@ -373,7 +371,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                         e.stopPropagation();
                         onSelectScenario(item.documentAnalysis);
                       }}
-                      className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600/30 group-hover:bg-indigo-600 text-indigo-200 group-hover:text-white rounded-lg text-xs font-semibold transition-all"
+                      className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-nhs-bluetint group-hover:bg-nhs-blue text-nhs-blue group-hover:text-white rounded-lg text-xs font-semibold transition-all"
                     >
                       <span>Equalize & Load</span>
                       <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -381,14 +379,14 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                   </div>
                 ))
               ) : (
-                <div className="p-6 text-center bg-slate-950/40 border border-slate-800/80 rounded-xl">
-                  <p className="text-xs text-slate-400 mb-3">
+                <div className="p-6 text-center bg-nhs-grey5 border border-nhs-grey4 rounded">
+                  <p className="text-xs text-nhs-secondary mb-3">
                     No exact statutory match found for "{searchQuery}".
                   </p>
                   <button
                     type="button"
                     onClick={() => handleSearchSubmit({ preventDefault: () => {} } as any)}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-colors"
+                    className="px-4 py-2 bg-nhs-blue hover:bg-nhs-darkblue text-white rounded text-xs font-semibold transition-colors"
                   >
                     Analyze "{searchQuery}" as Custom Citizen Inquiry
                   </button>
@@ -402,10 +400,10 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
       {/* Pre-loaded Benchmark Scenarios for Instant 1-Click Evaluation */}
       <div className="mt-8">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-nhs-secondary">
             Or test with real-world accessibility benchmark cases:
           </span>
-          <span className="text-[11px] text-indigo-400">
+          <span className="text-xs text-nhs-blue">
             Click any card to load & equalize instantly
           </span>
         </div>
@@ -421,32 +419,32 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                   setInputText(scenario.rawText);
                   onSelectScenario(scenario);
                 }}
-                className={`text-left p-3.5 rounded-xl border transition-all flex flex-col justify-between group ${
-                  isSelected 
-                    ? 'bg-indigo-950/60 border-indigo-400 ring-2 ring-indigo-400/40 shadow-lg' 
-                    : 'bg-slate-900/60 border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900'
-                }`}
+                className={`text-left p-3.5 rounded border transition-all flex flex-col justify-between group ${
+ isSelected 
+ ? 'bg-nhs-bluetint border-nhs-blue ring-2 ring-nhs-blue ' 
+ : 'bg-white border-nhs-grey4 hover:border-nhs-blue hover:bg-nhs-grey4'
+ }`}
               >
                 <div>
                   <div className="flex items-center justify-between gap-1 mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                    <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-nhs-grey5 text-nhs-text">
                       {scenario.category}
                     </span>
-                    <span className="text-[10px] font-semibold text-rose-400 bg-rose-950/60 px-1.5 py-0.5 rounded border border-rose-900">
+                    <span className="text-xs font-semibold text-nhs-red bg-nhs-redtint px-1.5 py-0.5 rounded border border-nhs-red">
                       {scenario.urgencyLevel}
                     </span>
                   </div>
-                  <h3 className="text-xs font-semibold text-white group-hover:text-indigo-300 line-clamp-2 mb-1">
+                  <h3 className="text-xs font-semibold text-nhs-text group-hover:text-nhs-blue line-clamp-2 mb-1">
                     {scenario.title}
                   </h3>
-                  <p className="text-[11px] text-slate-400 line-clamp-2">
+                  <p className="text-xs text-nhs-secondary line-clamp-2">
                     {scenario.keyInstitution}
                   </p>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="mt-3 pt-2 border-t border-nhs-grey4 flex items-center justify-between text-xs text-nhs-secondary">
                   <span>Grade {scenario.readingGradeOriginal} → {scenario.readingGradeSimplified}</span>
-                  <span className="text-indigo-400 font-medium group-hover:translate-x-0.5 transition-transform">
+                  <span className="text-nhs-blue font-medium group-hover:translate-x-0.5 transition-transform">
                     Equalize →
                   </span>
                 </div>

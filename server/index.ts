@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
-import { analyzePastedDocument } from '../src/utils/analyzer';
+import { analyzePastedDocument, calculateReadingGrade } from '../src/utils/analyzer';
 import { SEARCH_DATABASE } from '../src/data/searchDatabase';
 import { DocumentAnalysis } from '../src/types';
 
@@ -21,11 +21,11 @@ app.get('/api/health', (req: Request, res: Response) => {
     status: 'online',
     service: 'Ctrl+V Access Backend API',
     version: '1.0.0',
-    model: envKeyPresent ? 'gemini-3.8-flash (Frontier LLM)' : 'hybrid-local-nlp (Offline Resilient)',
+    model: envKeyPresent ? 'gemini-3.5-flash-lite (default; 3.8 available)' : 'hybrid-local-nlp (Offline Resilient)',
     geminiConfigured: envKeyPresent,
     supportedEngines: [
-      'gemini-3.8-flash',
       'gemini-3.5-flash-lite',
+      'gemini-3.8-flash',
       'rule-based-nlp-v2'
     ],
     timestamp: new Date().toISOString()
@@ -35,7 +35,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 // 2. Full 5-tier Equalizer Document Analysis Endpoint
 app.post('/api/analyze', async (req: Request, res: Response) => {
   try {
-    const { text, apiKey, model = 'gemini-3.8-flash', language = 'en' } = req.body;
+    const { text, apiKey, model = 'gemini-3.5-flash-lite', language = 'en' } = req.body;
 
     if (!text || typeof text !== 'string' || text.trim().length === 0) {
       return res.status(400).json({ error: 'Text content is required' });
@@ -52,15 +52,13 @@ Analyze the following bureaucratic, legal, or medical document and return ONLY a
 {
   "title": "Clear concise title",
   "category": "healthcare" | "disability" | "education" | "housing" | "employment" | "legal",
-  "readingGradeOriginal": number (e.g. 15.4),
-  "readingGradeSimplified": number (e.g. 5.0),
   "jargonDictionary": [{ "term": "string", "plainMeaning": "string" }],
   "urgencyLevel": "critical" | "high" | "medium" | "info",
   "deadline": "string or null",
   "daysRemaining": number,
   "keyInstitution": "string",
   "level1Summary": {
-    "plainEnglish": "A warm, accessible 5th-grade plain-English explanation without jargon",
+    "plainEnglish": "A warm explanation a 10-year-old could read: 3 to 6 short sentences of 8 to 12 words each, everyday one- and two-syllable words, no legal or medical terms",
     "bulletPoints": ["Key takeaway 1", "Key takeaway 2", "Key takeaway 3"],
     "bottomLine": "The 30-second essential bottom line",
     "tone": "Empathic and clear"
@@ -101,32 +99,51 @@ Analyze the following bureaucratic, legal, or medical document and return ONLY a
 Language requested: ${language}.
 Output pure JSON with no markdown wrapping.`;
 
-        const response = await ai.models.generateContent({
-          model: model || 'gemini-3.8-flash',
-          contents: `${systemPrompt}\n\nDOCUMENT TO EQUALIZE:\n${text}`
-        });
-
-        const rawOutput = response.text || '';
-        // Extract JSON if wrapped in markdown code fence
-        const jsonMatch = rawOutput.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          const parsed = JSON.parse(jsonMatch[0]);
-          const result: DocumentAnalysis = {
-            id: `doc-${Date.now()}`,
-            rawText: text,
-            jargonTermsCount: parsed.jargonDictionary?.length || 0,
-            ...parsed
-          };
-          return res.json({
-            success: true,
-            source: 'gemini-frontier',
-            model: model,
-            data: result
-          });
+        const requestedModel = model || 'gemini-3.5-flash-lite';
+        const modelChain = [requestedModel];
+        if (requestedModel !== 'gemini-3.5-flash-lite') {
+          modelChain.push('gemini-3.5-flash-lite');
         }
+
+        let lastGeminiError: string | undefined;
+        for (const candidate of modelChain) {
+          try {
+            const response = await ai.models.generateContent({
+              model: candidate,
+              contents: `${systemPrompt}\n\nDOCUMENT TO EQUALIZE:\n${text}`,
+              config: { responseMimeType: 'application/json' }
+            });
+
+            const rawOutput = response.text || '';
+            const jsonMatch = rawOutput.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              const parsed = JSON.parse(jsonMatch[0]);
+              // Reading grades are measured here with the same Flesch–Kincaid
+              // function the offline engine uses, never taken from the model.
+              const result: DocumentAnalysis = {
+                id: `doc-${Date.now()}`,
+                rawText: text,
+                jargonTermsCount: parsed.jargonDictionary?.length || 0,
+                ...parsed,
+                readingGradeOriginal: calculateReadingGrade(text),
+                readingGradeSimplified: calculateReadingGrade(parsed.level1Summary?.plainEnglish || '')
+              };
+              return res.json({
+                success: true,
+                source: 'gemini-frontier',
+                model: candidate,
+                data: result
+              });
+            }
+            lastGeminiError = `Model ${candidate} returned non-JSON output`;
+          } catch (modelErr: any) {
+            lastGeminiError = modelErr?.message || String(modelErr);
+            console.warn(`Gemini model ${candidate} failed, trying next:`, lastGeminiError);
+          }
+        }
+        console.warn('All Gemini model attempts failed, falling back to local NLP:', lastGeminiError);
       } catch (geminiErr: any) {
         console.warn('Gemini API call failed or key was invalid, falling back to local NLP engine:', geminiErr?.message);
-        // Fallback directly to high-accuracy local NLP engine
       }
     }
 

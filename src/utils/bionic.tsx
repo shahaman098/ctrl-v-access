@@ -38,7 +38,7 @@ export function formatBionic(text: string, enabled: boolean): React.ReactNode {
               return (
                 <span key={wIdx} className="inline-block">
                   {prefix}
-                  <strong className="font-extrabold text-white">{boldPart}</strong>
+                  <strong className="font-extrabold text-nhs-text">{boldPart}</strong>
                   <span className="opacity-90">{restPart}</span>
                   {suffix}
                 </span>

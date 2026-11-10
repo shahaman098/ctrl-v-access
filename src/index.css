@@ -8,8 +8,17 @@
   }
 
   body {
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-family: "Frutiger W01", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #212b32;
+    background: #f0f4f5;
   }
+
+  h1, h2, h3 { color: #212b32; }
+
+  /* NHS.UK link style */
+  a { color: inherit; }
 
   /* High contrast mode overrides */
   .high-contrast {
@@ -18,20 +27,40 @@
     color: #ffffff !important;
   }
 
-  .high-contrast .border-slate-800,
-  .high-contrast .border-slate-700 {
+  .high-contrast .border-nhs-grey4,
+  .high-contrast .border-nhs-grey3,
+  .high-contrast .border-nhs-blue {
     border-color: #ffff00 !important;
   }
 
-  .high-contrast .text-slate-400,
-  .high-contrast .text-slate-300 {
+  .high-contrast .text-nhs-secondary,
+  .high-contrast .text-nhs-text,
+  .high-contrast .text-nhs-blue,
+  .high-contrast h1, .high-contrast h2, .high-contrast h3 {
     color: #ffffff !important;
   }
 
-  .high-contrast .bg-slate-900,
-  .high-contrast .bg-slate-800 {
+  .high-contrast .bg-white,
+  .high-contrast .bg-nhs-grey5,
+  .high-contrast .bg-nhs-bluetint,
+  .high-contrast .bg-nhs-greentint,
+  .high-contrast .bg-nhs-redtint,
+  .high-contrast .bg-nhs-yellowtint {
     background-color: #000000 !important;
     border: 2px solid #ffff00 !important;
+  }
+
+  .high-contrast .text-nhs-green,
+  .high-contrast .text-nhs-red,
+  .high-contrast .text-nhs-ambertext {
+    color: #ffff00 !important;
+  }
+
+  .high-contrast .bg-nhs-warmyellow,
+  .high-contrast .bg-nhs-yellow,
+  .high-contrast .bg-nhs-warmyellow *,
+  .high-contrast .bg-nhs-yellow * {
+    color: #000000 !important;
   }
 
   /* Dyslexia mode overrides */
@@ -43,9 +72,12 @@
   }
 
   /* Focus visible accessibility styling */
+  /* NHS.UK focus state: yellow fill with a dark underline */
   *:focus-visible {
-    outline: 2px solid #818cf8 !important;
-    outline-offset: 2px !important;
+    outline: 4px solid transparent !important;
+    background-color: #ffeb3b !important;
+    color: #212b32 !important;
+    box-shadow: 0 -2px #ffeb3b, 0 4px #212b32 !important;
   }
 }
 
@@ -53,8 +85,19 @@
 .bionic-reading b,
 .bionic-reading strong {
   font-weight: 700;
-  color: #ffffff;
+  color: #212b32;
 }
+
+/* NHS.UK button: green with a darker bottom shadow */
+.nhs-button {
+  background: #007f3b; color: #fff; font-weight: 600; border-radius: 4px;
+  box-shadow: 0 4px 0 #00401e; transition: background .15s;
+}
+.nhs-button:hover { background: #00662f; }
+.nhs-button:active { transform: translateY(2px); box-shadow: 0 2px 0 #00401e; }
+
+/* NHS.UK card */
+.nhs-card { background: #fff; border: 1px solid #d8dde0; }
 
 .bionic-reading span.bionic-rest {
   opacity: 0.85;
@@ -63,10 +106,10 @@
 /* Pulse glow animation for the Ctrl+V trigger */
 @keyframes paste-glow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 15px rgba(0, 94, 184, 0.25);
   }
   50% {
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+    box-shadow: 0 0 30px rgba(0, 94, 184, 0.5);
   }
 }
 

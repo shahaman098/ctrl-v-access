@@ -91,9 +91,9 @@ export const App: React.FC = () => {
   }[settings.fontSize];
 
   return (
-    <div className={`min-h-screen flex flex-col bg-slate-950 text-slate-100 ${
-      settings.dyslexicFont ? 'dyslexia-font' : ''
-    } ${settings.highContrast ? 'high-contrast' : ''} ${fontSizeClass}`}>
+    <div className={`min-h-screen flex flex-col bg-nhs-grey5 text-nhs-text ${
+ settings.dyslexicFont ? 'dyslexia-font' : ''
+ } ${settings.highContrast ? 'high-contrast' : ''} ${fontSizeClass}`}>
       {/* Top Navigation with Backend & AI Engine diagnostics */}
       <Navbar 
         backendStatus={backendStatus}

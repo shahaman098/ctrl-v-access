@@ -4,79 +4,86 @@
 **Ctrl+V Access**
 
 ## Tagline
-**The Instant AI Equalizer: Paste Any Bureaucratic Notice to Get 5th-Grade Clarity, Rights, Audio, & Winning Appeals**
+**Paste a bureaucratic denial. Get plain English, your rights, a checklist, and a draft appeal, read aloud if you want it.**
 
 ---
 
 ## Inspiration
-Millions of individuals—particularly those living with disabilities, neurodivergence (ADHD, autism, dyslexia), low literacy, or non-native language backgrounds—face a debilitating "Administrative Wall." Routine communication from healthcare providers, disability support panels, universities, and public housing authorities is routinely written in dense, intimidating legal and bureaucratic language (Grade 14-16+ reading levels). 
+Many people, especially those with disabilities, ADHD, autism, dyslexia, low literacy, or English as a second language, hit an "administrative wall." Letters from health services, disability benefit panels, universities and housing authorities are written in dense legal and bureaucratic language. On the four real-style notices I benchmarked, the Flesch–Kincaid reading level runs from grade 13 to 20.
 
-Appeals work: according to [DWP PIP Official Statistics to April 2026](https://www.gov.uk/government/statistics/personal-independence-payment-statistics-to-april-2026/personal-independence-payment-official-statistics-to-april-2026), 65% of PIP disability benefit decisions that reach a tribunal hearing are overturned in the claimant's favour. Yet only about 7% of initial PIP decisions are ever appealed. Notices that are opaque, stressful and hard to parse are a big part of why.
+Appeals work. According to [DWP PIP Official Statistics to April 2026](https://www.gov.uk/government/statistics/personal-independence-payment-statistics-to-april-2026/personal-independence-payment-official-statistics-to-april-2026) (Table 5Aii), 65% of PIP disability benefit decisions that reach a tribunal are overturned in the claimant's favour. Most people never get that far. The notice is hard to read, the deadline is buried, and the rule the decision rests on is never named.
 
-When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to improve access to services, healthcare, education, and civil rights—we asked:  
-*What if the most fundamental shortcut on every computer, **Ctrl+V (Paste)**, could act as an instant equalizer? What if any person could simply copy a frightening denial letter, press Ctrl+V, and immediately receive clarity, discover their legal rights, listen aloud, and get a ready-to-send winning appeal letter?*
+The Ctrl+V Hackathon asks for technology that helps people reach what they need faster, the way Ctrl+V moves information instantly. So I asked: what if that shortcut were the equalizer? Copy the frightening letter, press Ctrl+V, and get something you can act on.
 
 ---
 
 ## What It Does
-**Ctrl+V Access** turns the clipboard into a universal assistive equalizing bridge:
+**Ctrl+V Access** turns the clipboard into an assistive bridge, in both directions: paste the letter in, then copy the appeal and form answers back out.
 
-1. **Global Keyboard Trigger (Ctrl+V / ⌘+V):** The user pastes an intimidating document or denial notice anywhere on screen.
-2. **Dual-Input Architecture (Ctrl+V Paste + Instant Rights Search):**
-   - **Global Clipboard Trigger:** The user pastes an intimidating document or denial notice anywhere on screen (`Ctrl+V` / `⌘+V`).
-   - **Statutory Rights & Guidance Search Engine:** In addition to pasting documents, citizens can instantly search our curated statutory rights knowledge base (covering NICE medical guidelines, DWP PIP regulations, Equality Act educational accommodations, Section 8 HUD hearing procedures, NHS FP92A medical exemption prescriptions, and UK Access to Work grants) by condition, keyword, or government department.
-3. **5-Tier Equalizer Architecture:**
-   - **Level 1: Plain English:** Rewrites the notice in short, simple sentences (measured Flesch-Kincaid grade 1–2.2 across our four case studies), strips bureaucratic posturing, provides a 30-second bottom-line summary, and features a demystified jargon dictionary.
-   - **Level 2: Statutory Rights & Legal Protections:** Uncovers governing statutory protections, relevant regulations, and hidden entitlements (such as automatic stays of eviction, prescription exemptions, or travel concessions).
-   - **Level 3: Action Roadmap & Progress Meter:** Provides an interactive checklist of exact steps to take, evidence to gather, and progress tracking.
-   - **Level 4: Auto-Drafted Appeal Letter:** Generates a complete, formal procedural review letter citing relevant standards and rules, complete with a 1-click accessible copy button (`modern-web-guidance` compliant).
-   - **Level 5: Smart Form Bridge:** Assists users in answering complex application portal questions with calibrated, clear responses ready to paste back.
-4. **Assistive Accessibility Suite:**
-   - **Bionic Focus:** Bolds word prefixes to guide eye movement and cut reading fatigue for neurodivergent and ADHD users.
-   - **Dyslexia-Optimized Typography:** Uses Lexend typeface with enhanced letter spacing and line heights.
-   - **WCAG AAA High Contrast:** 1-click high-contrast mode for visual clarity.
-   - **Voice Audio Narration:** In-browser Web Speech API audio reader with playback speed controls (0.85x to 1.5x) and visual waveform feedback.
-   - **Language preference:** A selector for 10 languages, passed to the Gemini engine for translated output when an API key is configured.
-
----
-
-## How We Built It
-- **Full-Stack Architecture:** Built with a decoupled, high-performance Node.js / Express REST API backend (`server/index.ts`) paired with a React 18, TypeScript, and Vite single-page application frontend.
-- **AI & Equalizer Engine:** Powered by Google Gemini 3.8 Flash via the `@google/genai` SDK for deep legal and medical document synthesis, backed by a resilient offline rule-based NLP engine that calculates real-time Flesch-Kincaid grade reductions and demystifies jargon even in disconnected environments.
-- **RESTful Endpoints:**
-  - `GET /api/health`: Real-time backend status, latency metrics, and active LLM configuration.
-  - `POST /api/analyze`: Dual-engine document equalization endpoint with automatic fallback.
-  - `POST /api/rights/search`: Searchable statutory rights database querying NICE clinical guidelines, PIP regulations, and Equality Act precedents.
-  - `POST /api/appeal/generate`: Custom petition and appeal letter drafting service.
-  - `POST /api/adaption/dataset`: Synthetic accessibility benchmark generator inspired by sponsor Adaption Platform's Adaptive Data initiative.
-- **Styling & Assistive UI:** Designed with Tailwind CSS, supporting dynamic font sizing, high-contrast themes, and responsive layouts.
-- **Accessibility & UX:** Integrated WAI-ARIA 1.2 landmarks, polite live regions for clipboard status, and accessible button components adhering to web development guidance.
-- **Tooling & Automation:** Screen captures and demo recording powered by Playwright and FFmpeg.
+1. **Two ways in**
+   - **Paste anywhere (Ctrl+V / ⌘+V):** a global paste listener picks up a notice pasted anywhere on the page. Pasting into other input fields still works normally.
+   - **Rights search:** a curated set of 7 statutory entries you can search by condition, keyword or department. They cover NICE NG17, PIP regulations, Equality Act 2010 education duties, HUD Section 8 hearings, NHS FP92A prescription exemption, Access to Work and Warm Home Discount.
+2. **Five layers of output**
+   - **1 · Plain English:** a bottom line, short bullet takeaways and a jargon dictionary.
+   - **2 · Rights:** the governing rules and citations, plus entitlements people often miss.
+   - **3 · Checklist:** steps to take and evidence to gather, with a progress meter.
+   - **4 · Appeal draft:** a formal reconsideration letter with the grounds filled in. One click copies it.
+   - **5 · Smart Form Bridge:** explains what tricky portal questions are really asking, with a factual answer ready to paste back.
+3. **Assistive controls** (always available)
+   - **Bionic Focus:** bolds the first part of each word to guide the eye.
+   - **Lexend typeface:** dyslexia-oriented, with extra letter and line spacing.
+   - **High contrast:** a yellow-on-black mode designed to meet WCAG AAA contrast ratios. No third-party audit has been done.
+   - **Read aloud:** Web Speech API narration at 0.85×, 1×, 1.25× or 1.5×.
+   - **Language:** 10 output languages through the Gemini path. I checked that a Spanish request returns the full analysis in Spanish. Offline mode stays in English.
 
 ---
 
-## Challenges We Ran Into
-- **Designing True Accessibility Without Visual Clutter:** Balancing high-density legal and medical information with a calm, low-cognitive-load user experience required rigorous prototyping of progressive disclosure tabs.
-- **Clipboard Permissions & Keyboard Accessibility:** Creating a robust global paste listener that respects active inputs while enabling one-touch `Ctrl+V` required careful event target filtering and fallback handling.
+## How I Built It
+- **Stack:** React 18, TypeScript, Vite and Tailwind on the front end, with a Node.js / Express 5 REST API (`server/index.ts`).
+- **AI engine:** Google Gemini via the `@google/genai` SDK, using `gemini-3.5-flash-lite` by default (`gemini-3.8-flash` is selectable). Gemini reads any pasted notice and returns structured JSON covering all five layers in the chosen language. On a Blue Badge refusal letter that isn't one of the built-in cases, it returned an answer in a few seconds. It named the correct governing regulation, the Disabled Persons (Badges for Motor Vehicles) (England) Regulations 2000, and set out the 28-day review route. The server never trusts the model's own idea of how readable its answer is. It scores the result with the same Flesch–Kincaid function as the offline engine. Measured that way, the live AI took two unseen letters from grade 15.4 to 1.4–2.4 (a Blue Badge refusal) and from 13.5 to 5.5 (a Universal Credit sanction).
+- **Fallback layers:** if there's no API key, or Gemini errors, the server uses a local rule-based engine. If the API itself is unreachable, the browser runs the same engine. That engine does Flesch–Kincaid scoring, jargon detection, category heuristics and appeal scaffolding. Its results are heuristic but always structured.
+- **REST endpoints:**
+  - `GET /api/health`: backend status and which engine is active.
+  - `POST /api/analyze`: analyzes a notice with Gemini, falling back to the local engine.
+  - `POST /api/rights/search`: searches the curated rights entries.
+  - `POST /api/appeal/generate`: fills a reconsideration-letter template from the grounds and citation you supply.
+  - `POST /api/adaption/dataset`: a static sample payload shaped like an Adaption Platform dataset response. It is a placeholder for a future integration, not a live connection.
+- **Accessibility in the UI:** ARIA landmarks, polite live regions announcing clipboard actions, visible focus rings and native keyboard-operable controls. No automated WCAG conformance report is claimed.
+- **Tooling:** Playwright and FFmpeg for the screenshots and the demo video.
 
 ---
 
-## Accomplishments We're Proud Of
-- Measured, not claimed: across four case studies, notices get 60–74% shorter, and Flesch-Kincaid grade drops from 13–20 to 1.2–2.0 (independently checked with the `textstat` library). Dale-Chall drops from 11.8–14.9 to 5.6–6.5. The local engine processes a notice in about 0.1–0.2 ms. Raw output is in `video/evidence/benchmark.txt`.
-- Building a tool that provides both comprehension and immediate advocacy (the auto-drafted appeal letter).
-- Achieving complete WCAG AAA contrast support, full keyboard navigability, and smooth Bionic reading integration.
+## Challenges I Ran Into
+- **Lots of information, low cognitive load:** legal and medical detail is dense. Splitting it into five progressive tabs kept each screen calm.
+- **A paste listener that doesn't get in the way:** the global Ctrl+V trigger has to leave normal typing and pasting into form fields alone. That took careful event-target filtering.
+- **Never leaving someone stuck:** someone with patchy internet or no API key still needs an answer. That led to three fallback layers: Gemini, the local engine on the server, and the local engine in the browser.
 
 ---
 
-## What We Learned
-Accessible design isn't just about color contrast—it's about cognitive accessibility. Simplifying bureaucratic language directly empowers vulnerable individuals to assert their rights and access vital care and services.
+## Accomplishments I'm Proud Of
+- **A measured benchmark of the reference answers.** The four built-in case studies (an NHS glucose-monitor denial, a PIP 0-points award, a university exam-adjustment refusal, a Section 8 voucher termination) have hand-checked plain-English reference answers. Compared with the original notices:
+  - They are 60–74% shorter.
+  - Flesch–Kincaid grade drops from 13.4–19.9 to 1.2–2.0 (checked independently with the `textstat` library).
+  - Dale–Chall drops from 11.8–14.9 to 5.6–6.5.
+  - Raw output is in `video/evidence/benchmark.txt`.
+- **Live AI on letters it has never seen**, with three layers of graceful fallback, so the app always answers.
+- **Comprehension and advocacy together:** the same paste explains the letter and drafts the appeal.
+
+---
+
+## What I Learned
+Accessible design isn't only about colour contrast. It's about cognitive accessibility. A letter someone can't read is a right they can't use.
 
 ---
 
 ## What's Next for Ctrl+V Access
-- Native browser extension for 1-click page highlighting and right-click equalizing.
-- Integration with local and open-source models for offline privacy-first local processing.
-- Direct integration with public legal aid and community advocacy clinics.
+- Automatically retry when the live AI output still measures above the target reading grade.
+- A browser extension for right-click "equalize this page."
+- Local and open-source models for private, offline processing.
+- A live Adaption Platform integration to expand the multilingual training data.
+- Partnerships with legal aid and advocacy clinics to review the citations.
+
+*Prototype, not legal advice. Citations are starting points; verify them before filing. The benchmark letters are realistic composites, not real case files.*
 
 ---
 

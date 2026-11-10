@@ -52,11 +52,11 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
       <button
         type="button"
         onClick={handleCopy}
-        className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors min-h-[32px] min-w-[32px] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
-          copied 
-            ? 'bg-emerald-600 text-white' 
-            : 'bg-indigo-600 hover:bg-indigo-500 text-white'
-        } ${className}`}
+        className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors min-h-[32px] min-w-[32px] focus:outline-none focus-visible:ring-2 focus-visible:ring-nhs-yellow ${
+ copied 
+ ? 'bg-nhs-green text-white' 
+ : 'bg-nhs-blue hover:bg-nhs-darkblue text-white'
+ } ${className}`}
         aria-label={label}
       >
         {copied ? (
