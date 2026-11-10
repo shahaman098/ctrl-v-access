@@ -11,7 +11,7 @@
 ## Inspiration
 Millions of individuals—particularly those living with disabilities, neurodivergence (ADHD, autism, dyslexia), low literacy, or non-native language backgrounds—face a debilitating "Administrative Wall." Routine communication from healthcare providers, disability support panels, universities, and public housing authorities is routinely written in dense, intimidating legal and bureaucratic language (Grade 14-16+ reading levels). 
 
-Studies show that over 60% of first-round administrative denials are overturned on appeal, yet fewer than 15% of affected people challenge these decisions because the notices are opaque, stressful, and difficult to parse.
+Appeals work: according to [DWP PIP Official Statistics to April 2026](https://www.gov.uk/government/statistics/personal-independence-payment-statistics-to-april-2026/personal-independence-payment-official-statistics-to-april-2026), 65% of PIP disability benefit decisions that reach a tribunal hearing are overturned in the claimant's favour. Yet only about 7% of initial PIP decisions are ever appealed. Notices that are opaque, stressful and hard to parse are a big part of why.
 
 When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to improve access to services, healthcare, education, and civil rights—we asked:  
 *What if the most fundamental shortcut on every computer, **Ctrl+V (Paste)**, could act as an instant equalizer? What if any person could simply copy a frightening denial letter, press Ctrl+V, and immediately receive clarity, discover their legal rights, listen aloud, and get a ready-to-send winning appeal letter?*
@@ -26,7 +26,7 @@ When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to i
    - **Global Clipboard Trigger:** The user pastes an intimidating document or denial notice anywhere on screen (`Ctrl+V` / `⌘+V`).
    - **Statutory Rights & Guidance Search Engine:** In addition to pasting documents, citizens can instantly search our curated statutory rights knowledge base (covering NICE medical guidelines, DWP PIP regulations, Equality Act educational accommodations, Section 8 HUD hearing procedures, NHS FP92A medical exemption prescriptions, and UK Access to Work grants) by condition, keyword, or government department.
 3. **5-Tier Equalizer Architecture:**
-   - **Level 1: 5th-Grade Plain English:** Strips bureaucratic posturing, provides a 30-second bottom-line summary, and features a demystified jargon dictionary.
+   - **Level 1: Plain English:** Rewrites the notice in short, simple sentences (measured Flesch-Kincaid grade 1–2.2 across our four case studies), strips bureaucratic posturing, provides a 30-second bottom-line summary, and features a demystified jargon dictionary.
    - **Level 2: Statutory Rights & Legal Protections:** Uncovers governing statutory protections, relevant regulations, and hidden entitlements (such as automatic stays of eviction, prescription exemptions, or travel concessions).
    - **Level 3: Action Roadmap & Progress Meter:** Provides an interactive checklist of exact steps to take, evidence to gather, and progress tracking.
    - **Level 4: Auto-Drafted Appeal Letter:** Generates a complete, formal procedural review letter citing relevant standards and rules, complete with a 1-click accessible copy button (`modern-web-guidance` compliant).
@@ -36,7 +36,7 @@ When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to i
    - **Dyslexia-Optimized Typography:** Uses Lexend typeface with enhanced letter spacing and line heights.
    - **WCAG AAA High Contrast:** 1-click high-contrast mode for visual clarity.
    - **Voice Audio Narration:** In-browser Web Speech API audio reader with playback speed controls (0.85x to 1.5x) and visual waveform feedback.
-   - **Multilingual Support:** Instant language selection across 10 global languages.
+   - **Language preference:** A selector for 10 languages, passed to the Gemini engine for translated output when an API key is configured.
 
 ---
 
@@ -62,7 +62,7 @@ When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to i
 ---
 
 ## Accomplishments We're Proud Of
-- Transforming a 16th-grade college reading level medical notice into an accessible 5th-grade plain-English summary in under 100 milliseconds.
+- Measured, not claimed: across four case studies, notices get 60–74% shorter, and Flesch-Kincaid grade drops from 13–20 to 1.2–2.0 (independently checked with the `textstat` library). Dale-Chall drops from 11.8–14.9 to 5.6–6.5. The local engine processes a notice in about 0.1–0.2 ms. Raw output is in `video/evidence/benchmark.txt`.
 - Building a tool that provides both comprehension and immediate advocacy (the auto-drafted appeal letter).
 - Achieving complete WCAG AAA contrast support, full keyboard navigability, and smooth Bionic reading integration.
 

@@ -42,7 +42,7 @@ You maintain a right to submit a formal request for procedural review within twe
         'Immediate risk: Night-time blood sugar crashes without warning symptoms.',
         'Your deadline: You have 28 calendar days (until Dec 08, 2026) to file an appeal.'
       ],
-      bottomLine: 'Do not panic. Over 40% of first-time funding denials are overturned when appealed with a doctor\'s clinical safety letter citing NICE Guideline NG17.',
+      bottomLine: 'Do not panic. You have the right to a review, and a letter from your doctor citing NICE Guideline NG17 makes your appeal much stronger.',
       tone: 'Defensive bureaucratic denial based on cost-containment; legally vulnerable on patient safety.'
     },
     level2Rights: {
@@ -189,7 +189,7 @@ You must ask us for a Mandatory Reconsideration within one month of the date on 
         'The law on your side: Regulation 4(2A) requires you to perform tasks "reliably, safely, repeatedly, and in a reasonable time".',
         'Deadline: 28 days to lodge Mandatory Reconsideration.'
       ],
-      bottomLine: 'Do not be discouraged. Official government statistics show over 68% of tribunal appeals overturn this exact 0-point assessment in the claimant\'s favour.',
+      bottomLine: 'Do not be discouraged. 65% of PIP decisions that reach a tribunal hearing are overturned in the claimant\'s favour (DWP official statistics, April 2026).',
       tone: 'Adversarial administrative dismissal based on informal phone observations.'
     },
     level2Rights: {
@@ -546,4 +546,5 @@ export const SCENARIOS: DocumentAnalysis[] = RAW_SCENARIOS.map((s) => ({
   ...s,
   readingGradeOriginal: calculateReadingGrade(s.rawText),
   readingGradeSimplified: calculateReadingGrade(s.level1Summary.plainEnglish),
+  jargonTermsCount: s.jargonDictionary.length,
 }));

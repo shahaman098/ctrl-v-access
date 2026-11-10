@@ -19,7 +19,7 @@ Optional: if you also want your face in a corner bubble, record it as a video, a
 *On screen: the raw NHS glucose-monitor denial letter, scrolling. Overlay: "Grade 18+ reading level".*
 
 **NARRATION**
-> This is a real-style NHS funding denial. It's two hundred and seventeen words of legal language, at a reading level above university. If you have ADHD, dyslexia, a brain injury, or English is your second language, this letter is a wall. And appeals work. In the UK in 2023 to 24, more than four in ten disability benefit appeals that reached a tribunal decision were overturned. Most people never appeal, because they can't read the letter.
+> This is a real-style NHS funding denial. It's two hundred and seventeen words of legal language, at a reading level above university. If you have ADHD, dyslexia, a brain injury, or English is your second language, this letter is a wall. And appeals work. In the UK, nearly two in three disability benefit decisions that reach a tribunal hearing are overturned. Most people never appeal, because they can't read the letter.
 
 ## Scene 2: One keystroke (about 0:20 to 0:40)
 *On screen: copy the letter, press Ctrl+V on the Ctrl+V Access home page, and the analysis appears.*
@@ -80,7 +80,7 @@ Optional: if you also want your face in a corner bubble, record it as a video, a
 | Dale-Chall 11.8 to 14.9 before, 5.6 to 6.5 after | Same file, from textstat 0.7.13. Dale-Chall 5.0–6.9 corresponds to roughly a US grade 5 to 8 reader. |
 | Engine under 0.2 ms per letter | Same file: an average of 1,000 runs of `analyzePastedDocument`. |
 | Requests answer in milliseconds | `video/evidence/terminal.txt`, real `curl` captures from `localhost:3001` (2 to 30 ms). |
-| More than 4 in 10 UK disability benefit (PIP) appeals that reached a decision were overturned | A UK Parliament written answer gives FY2023-24 as 34,400 overturned out of 77,700 cleared, about 44% ([parallelparliament.co.uk](https://parallelparliament.co.uk/question/39207/personal-independence-payment-appeals)). Check the figure on that page before you submit. If it doesn't hold up, cut that sentence. |
+| Nearly 2 in 3 PIP decisions that reach a tribunal hearing are overturned (on-screen: 65%) | [DWP PIP Official Statistics to April 2026](https://www.gov.uk/government/statistics/personal-independence-payment-statistics-to-april-2026/personal-independence-payment-official-statistics-to-april-2026), Table 5Aii: "65% of the DWP decisions cleared at a tribunal hearing were overturned" (initial decisions Jan 2021–Dec 2025). If you already recorded the older line, "more than four in ten", keep it, because it is still true. |
 
 **Things the video deliberately does not claim:**
 - It doesn't say the Adaption Platform API is integrated. `/api/adaption/dataset` returns fixed sample data, so the sponsor is thanked, not claimed as a dependency.

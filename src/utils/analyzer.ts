@@ -38,18 +38,18 @@ export function calculateReadingGrade(text: string): number {
  * Common bureaucratic and medical jargon dictionary
  */
 const COMMON_JARGON: { pattern: RegExp; term: string; plain: string }[] = [
-  { pattern: /\b(pursuant to|in accordance with)\b/gi, term: 'Pursuant to', plain: 'Following or under the rule of' },
-  { pattern: /\b(procedural review|reconsideration)\b/gi, term: 'Procedural Review / Reconsideration', plain: 'Formal appeal to check if they made an error' },
-  { pattern: /\b(substantive|substantively)\b/gi, term: 'Substantive', plain: 'Significant, meaningful, or essential' },
-  { pattern: /\b(contraindicated|contraindication)\b/gi, term: 'Contraindicated', plain: 'Unsafe or not recommended for you' },
-  { pattern: /\b(titrated|titration)\b/gi, term: 'Titrated', plain: 'Adjusting medication dose up or down' },
-  { pattern: /\b(clinical exceptionalism)\b/gi, term: 'Clinical Exceptionalism', plain: 'A rule requiring proof you are sicker than others' },
-  { pattern: /\b(recertification|redetermination)\b/gi, term: 'Recertification / Redetermination', plain: 'Checking if you still qualify' },
-  { pattern: /\b(cessation|terminated|termination)\b/gi, term: 'Cessation / Termination', plain: 'Stopping or cancelling your service/benefit' },
-  { pattern: /\b(hereby|therein|wherein|wherefore)\b/gi, term: 'Hereby / Wherein', plain: 'Formally / In this document' },
-  { pattern: /\b(requisite|requisite threshold)\b/gi, term: 'Requisite Threshold', plain: 'Required minimum standard' },
-  { pattern: /\b(informal hearing)\b/gi, term: 'Informal Hearing', plain: 'An independent review meeting where you can bring evidence' },
-  { pattern: /\b(reasonable adjustments?)\b/gi, term: 'Reasonable Adjustments', plain: 'Legal requirement for organizations to adapt for disabilities' }
+  { pattern: /\b(pursuant to|in accordance with)\b/i, term: 'Pursuant to', plain: 'Following or under the rule of' },
+  { pattern: /\b(procedural review|reconsideration)\b/i, term: 'Procedural Review / Reconsideration', plain: 'Formal appeal to check if they made an error' },
+  { pattern: /\b(substantive|substantively)\b/i, term: 'Substantive', plain: 'Significant, meaningful, or essential' },
+  { pattern: /\b(contraindicated|contraindication)\b/i, term: 'Contraindicated', plain: 'Unsafe or not recommended for you' },
+  { pattern: /\b(titrated|titration)\b/i, term: 'Titrated', plain: 'Adjusting medication dose up or down' },
+  { pattern: /\b(clinical exceptionalism)\b/i, term: 'Clinical Exceptionalism', plain: 'A rule requiring proof you are sicker than others' },
+  { pattern: /\b(recertification|redetermination)\b/i, term: 'Recertification / Redetermination', plain: 'Checking if you still qualify' },
+  { pattern: /\b(cessation|terminated|termination)\b/i, term: 'Cessation / Termination', plain: 'Stopping or cancelling your service/benefit' },
+  { pattern: /\b(hereby|therein|wherein|wherefore)\b/i, term: 'Hereby / Wherein', plain: 'Formally / In this document' },
+  { pattern: /\b(requisite|requisite threshold)\b/i, term: 'Requisite Threshold', plain: 'Required minimum standard' },
+  { pattern: /\b(informal hearing)\b/i, term: 'Informal Hearing', plain: 'An independent review meeting where you can bring evidence' },
+  { pattern: /\b(reasonable adjustments?)\b/i, term: 'Reasonable Adjustments', plain: 'Legal requirement for organizations to adapt for disabilities' }
 ];
 
 /**

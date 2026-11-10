@@ -22,7 +22,7 @@ Every day, millions of people with cognitive disabilities, low reading literacy,
 3. **University Accommodation Denials:** Higher-education disability offices refusing exam time concessions and assistive software by enforcing arbitrary "36-month recency" rules on permanent neurological conditions (ADHD, dyslexia).
 4. **Housing & Civil Subsidy Terminations:** Local housing authorities issuing termination notices for rental assistance (Section 8 / HCV) due to minor paperwork deadlines while omitting due process hearing protections.
 
-The administrative burden is not an accident—it is designed to discourage appeals. **Over 65% of bureaucratic benefit and treatment denials are overturned on appeal**, but fewer than 15% of recipients ever appeal because they cannot comprehend the hostile language or afford legal counsel.
+The administrative burden is not an accident—it is designed to discourage appeals. **65% of UK PIP disability benefit decisions that reach a tribunal hearing are overturned** ([DWP PIP Official Statistics to April 2026](https://www.gov.uk/government/statistics/personal-independence-payment-statistics-to-april-2026/personal-independence-payment-official-statistics-to-april-2026), Table 5Aii), yet only about 7% of initial decisions are ever appealed.
 
 ---
 
@@ -36,8 +36,8 @@ Whenever a user encounters an intimidating document, letter, email, or applicati
 
 ```mermaid
 flowchart TD
-    A["Raw Inaccessible Document / Letter<br/>(Grade 16.4 College / Legal Jargon)"] -->|Ctrl+V Paste| B["Ctrl+V Access Equalizer Engine"]
-    B --> C["Level 1: 5th-Grade Clarity<br/>(30-Sec Bottom Line + Jargon Dictionary)"]
+    A["Raw Inaccessible Document / Letter<br/>(Flesch-Kincaid Grade 13–18+ / Legal Jargon)"] -->|Ctrl+V Paste| B["Ctrl+V Access Equalizer Engine"]
+    B --> C["Level 1: Plain-English Clarity<br/>(30-Sec Bottom Line + Jargon Dictionary)"]
     B --> D["Level 2: Statutory Rights & Laws<br/>(NICE NG17, Equality Act 2010, HUD 24 CFR)"]
     B --> E["Level 3: Action Checklist<br/>(Interactive progress bar, evidence tracker)"]
     B --> F["Level 4: Auto-Drafted Appeal<br/>(Formal legal reconsideration letter to copy-paste)"]
@@ -55,7 +55,7 @@ flowchart TD
 - **Statutory Rights Search Engine:** Search a verified database of citizen rights, regulations, and entitlements (NICE guidelines, PIP scoring regulations, Equality Act accommodations, HUD fair housing rules, free prescription exemptions, and Access to Work grants) by keyword, condition, or government body.
 
 ### 2. Multi-Tier Equalizer Architecture
-- **Level 1: 5th-Grade Plain English:** Strips bureaucratic padding, calculating live Flesch-Kincaid grade level reduction (e.g., Grade 16.4 down to Grade 5.1). Surfaces a 30-second bottom line and a demystified jargon dictionary.
+- **Level 1: Plain English:** Strips bureaucratic padding and shows the Flesch-Kincaid grade of the original and of the summary, both computed live by the same formula (e.g., NHS denial: Grade 18+ down to Grade 1). Surfaces a 30-second bottom line and a demystified jargon dictionary.
 - **Level 2: Statutory Rights Discovery:** Identifies the governing statutory framework (e.g. *NHS Constitution*, *NICE Guideline NG17*, *Equality Act 2010 Part 6*, *HUD 24 C.F.R. § 982.555*) and highlights hidden entitlements (e.g. automatic stay of eviction, free prescription exemption, companion passes).
 - **Level 3: Action Roadmap & Progress Meter:** Checkable step-by-step resolution tasks with required document tags and exportable checklist.
 - **Level 4: Auto-Drafted Appeal Letter:** Generates a formal, legally grounded appeal and reconsideration notice formatted with citations and placeholders, equipped with a 1-click accessible copy button (`modern-web-guidance` compliant).
@@ -66,7 +66,7 @@ flowchart TD
 - **Dyslexia-Optimized Typography:** Integrates specialized letter-spacing and clean sans-serif letterforms (Lexend).
 - **WCAG AAA High-Contrast Mode:** 1-click toggle for high-contrast yellow-on-black color scheme exceeding AAA contrast thresholds.
 - **Voice Audio Narration:** Browser-native Text-to-Speech (TTS) audio reader with play/pause, reset, rate control (0.85x to 1.5x), and live visual waveform.
-- **Multilingual Support:** Instant language switching across 10 global languages (English, Spanish, French, Arabic, Hindi, Ukrainian, Urdu, Bengali, Chinese, Portuguese), aligning with the Adaption platform's multilingual accessibility goals.
+- **Multilingual Support:** Language preference across 10 languages (English, Spanish, French, Arabic, Hindi, Ukrainian, Urdu, Bengali, Chinese, Portuguese). It is passed to the Gemini engine for translated output when an API key is configured, in line with sponsor Adaption Platform's multilingual goals.
 - **Universal Keyboard Navigation:** Global `Ctrl+V` paste listener, full focus rings, ARIA live regions, and semantic landmarks.
 
 ---
@@ -75,12 +75,12 @@ flowchart TD
 
 The platform includes 4 authentic, pre-loaded case studies for instant 1-click evaluation:
 
-| Scenario | Issuing Authority | Original Grade | Primary Legal Protection |
+| Scenario | Issuing Authority | FK Grade (original → summary) | Primary Legal Protection |
 |:---|:---|:---:|:---|
-| **NHS Glucose Monitor Denial** | Integrated Care Board (ICB) | Grade 16.4 | NICE Guideline NG17 (Rec 1.6.10) & NHS Constitution |
-| **PIP Disability 0-Points Award** | Dept for Work & Pensions (DWP) | Grade 15.8 | Regulation 4(2A) Reliability Test & UT Case UKUT 0540 |
-| **University Exam Accommodation Denial** | Central Accommodations Panel | Grade 14.9 | Equality Act 2010 (Section 20 & 91: Reasonable Adjustments) |
-| **Housing Voucher Subsidy Termination** | Metropolitan Housing Authority | Grade 15.5 | HUD 24 C.F.R. § 982.555 & Goldberg v. Kelly Due Process |
+| **NHS Glucose Monitor Denial** | Integrated Care Board (ICB) | 18+ → 1 | NICE Guideline NG17 (Rec 1.6.10) & NHS Constitution |
+| **PIP Disability 0-Points Award** | Dept for Work & Pensions (DWP) | 13 → 2.2 | Regulation 4(2A) Reliability Test & UT Case UKUT 0540 |
+| **University Exam Accommodation Denial** | Central Accommodations Panel | 18+ → 1 | Equality Act 2010 (Section 20 & 91: Reasonable Adjustments) |
+| **Housing Voucher Subsidy Termination** | Metropolitan Housing Authority | 12.5 → 1.7 | HUD 24 C.F.R. § 982.555 & Goldberg v. Kelly Due Process |
 
 ---
 
@@ -102,7 +102,7 @@ The platform includes 4 authentic, pre-loaded case studies for instant 1-click e
   - `POST /api/analyze`: Dual-engine multi-tier equalization
   - `POST /api/rights/search`: Statutory rights search engine
   - `POST /api/appeal/generate`: Custom petition drafting service
-  - `POST /api/adaption/dataset`: Synthetic dataset synthesizer for Adaption Platform
+  - `POST /api/adaption/dataset`: Sample benchmark records in a dataset format (static sample data; no live Adaption Platform API call)
 
 ### Tooling & Automation
 - **Testing & Recording:** Playwright, Chrome DevTools Protocol, FFmpeg

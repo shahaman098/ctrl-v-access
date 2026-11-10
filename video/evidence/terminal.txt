@@ -10,9 +10,9 @@ $ curl -s localhost:3001/api/health | jq
     "gemini-3.5-flash-lite",
     "rule-based-nlp-v2"
   ],
-  "timestamp": "2026-11-10T19:24:06.527Z"
+  "timestamp": "2026-11-10T19:46:16.405Z"
 }
-# HTTP 200 · 5.0 ms
+# HTTP 200 · 2.2 ms
 
 $ curl -s -X POST localhost:3001/api/analyze -d @nhs_cgm_denial.json | jq '{source, model, data: {category, urgencyLevel, daysRemaining, readingGradeOriginal, readingGradeSimplified, jargonTermsCount}}'
 {
@@ -24,10 +24,10 @@ $ curl -s -X POST localhost:3001/api/analyze -d @nhs_cgm_denial.json | jq '{sour
     "daysRemaining": 28,
     "readingGradeOriginal": 18,
     "readingGradeSimplified": 3.3,
-    "jargonTermsCount": 6
+    "jargonTermsCount": 7
   }
 }
-# HTTP 200 · 2.2 ms
+# HTTP 200 · 1.4 ms
 
 $ curl -s -X POST localhost:3001/api/rights/search -d '{"query":"pip"}' | jq '{count, titles: [.results[].title]}'
 {
@@ -36,7 +36,7 @@ $ curl -s -X POST localhost:3001/api/rights/search -d '{"query":"pip"}' | jq '{c
     "Personal Independence Payment (PIP): 0 Points Award & Mandatory Reconsideration"
   ]
 }
-# HTTP 200 · 2.1 ms
+# HTTP 200 · 1.2 ms
 
 $ curl -s -X POST localhost:3001/api/appeal/generate -d '{"recipient":"ICB Appeals Panel"}' | jq -r .letter | head -5
 FORMAL NOTICE OF PROCEDURAL REVIEW & STATUTORY RECONSIDERATION
@@ -44,4 +44,4 @@ FORMAL NOTICE OF PROCEDURAL REVIEW & STATUTORY RECONSIDERATION
 Date: 10 November 2026
 To: ICB Appeals Panel
 Reference / Claim ID: [INSERT REFERENCE NUMBER]
-# HTTP 200 · 3.1 ms
+# HTTP 200 · 1.3 ms
