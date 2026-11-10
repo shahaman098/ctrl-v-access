@@ -31,7 +31,7 @@ When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to i
    - **Level 3: Action Roadmap & Progress Meter:** Provides an interactive checklist of exact steps to take, evidence to gather, and progress tracking.
    - **Level 4: Auto-Drafted Appeal Letter:** Generates a complete, formal procedural review letter citing relevant standards and rules, complete with a 1-click accessible copy button (`modern-web-guidance` compliant).
    - **Level 5: Smart Form Bridge:** Assists users in answering complex application portal questions with calibrated, clear responses ready to paste back.
-3. **Assistive Accessibility Suite:**
+4. **Assistive Accessibility Suite:**
    - **Bionic Focus:** Bolds word prefixes to guide eye movement and cut reading fatigue for neurodivergent and ADHD users.
    - **Dyslexia-Optimized Typography:** Uses Lexend typeface with enhanced letter spacing and line heights.
    - **WCAG AAA High Contrast:** 1-click high-contrast mode for visual clarity.
