@@ -1,6 +1,7 @@
+import { calculateReadingGrade } from '../utils/analyzer';
 import { DocumentAnalysis } from '../types';
 
-export const SCENARIOS: DocumentAnalysis[] = [
+const RAW_SCENARIOS: DocumentAnalysis[] = [
   {
     id: 'healthcare-denial',
     title: 'NHS / Health Trust: Continuous Glucose Monitor & Funding Denial',
@@ -34,7 +35,7 @@ You maintain a right to submit a formal request for procedural review within twe
       { term: 'Substantive Procedural Defects', plainMeaning: 'Proof that the panel broke its own meeting rules, lost your records, or ignored your doctor\'s letters.' }
     ],
     level1Summary: {
-      plainEnglish: `The NHS panel has refused to pay for your Continuous Glucose Monitor (CGM). They claim that you haven't tried raising your pump insulin doses high enough yet, and that your blood sugar numbers aren't high enough to qualify under their strict rules. However, your specialist doctor explicitly said your night-time crashes are life-threatening. You have exactly 28 days to challenge this decision.`,
+      plainEnglish: `The NHS said no. They will not pay for your glucose monitor. They say your sugar is not low enough yet. They say you must try more changes to your pump first. But your own doctor says your low sugar at night is a real risk to your life. That matters. You can ask them to look again. You have 28 days to do it.`,
       bulletPoints: [
         'Decision: REFUSED funding for your CGM sensor.',
         'Why they rejected it: They claim you have not tried enough traditional treatments, despite your doctor\'s recommendation.',
@@ -181,7 +182,7 @@ You must ask us for a Mandatory Reconsideration within one month of the date on 
       { term: 'Mandatory Reconsideration', plainMeaning: 'The mandatory step where a different DWP officer reviews the file before you can take them to an independent judicial tribunal (where over 70% of appeals win).' }
     ],
     level1Summary: {
-      plainEnglish: `The DWP gave you 0 points for both Daily Living and Mobility. They based this almost entirely on a 30-minute phone call where you spoke clearly, ignoring your medical letters, chronic pain, and panic attacks. This is a very common standard refusal. By law, if you cannot prepare a meal or walk safely, repeatedly, and without severe pain or exhaustion, you DO qualify. You have until December 08, 2026 to file a Mandatory Reconsideration.`,
+      plainEnglish: `The DWP gave you 0 points. That means no money for daily life or for getting around. They made this choice after one short phone call. They did not read your doctor's notes. The law says a task only counts if you can do it safely, again and again, and without pain. If you can't, you should get points. You can ask them to look again. Do it by December 8, 2026.`,
       bulletPoints: [
         'Decision: 0 points awarded (Claim completely rejected).',
         'Assessor flaw: Confused phone call conversation with physical ability to cook, stand, and travel safely.',
@@ -321,7 +322,7 @@ You are advised that you may re-apply upon commissioning and submitting a new, u
       { term: 'Anticipatory Duty of Reasonable Adjustments', plainMeaning: 'Under the Equality Act 2010, the university is legally required to remove barriers BEFORE you fail, and cannot place arbitrary financial costs onto disabled students.' }
     ],
     level1Summary: {
-      plainEnglish: `The university rejected your exam accommodations (extra time, assistive software, and extension flexibility). They claim your ADHD/dyslexia diagnostic report is "too old" because it is from 2022, and told you to pay for an expensive new test. Under the Equality Act 2010, ADHD and dyslexia are lifelong neurodivergent conditions that do NOT expire, and demanding private re-assessments at your own cost constitutes unlawful disability discrimination. You have 14 days to appeal.`,
+      plainEnglish: `The school said no to your exam help. That means no extra time and no help with software. They say your test for ADHD or dyslexia is too old. They want you to pay for a new one. But these do not go away with age. The law says the school must help you. It can't make you pay to prove it again. You have 14 days to ask them to change it.`,
       bulletPoints: [
         'Decision: All requested accommodations REJECTED.',
         'Their excuse: Diagnostic report is 4 years old (they want one under 3 years old).',
@@ -445,7 +446,7 @@ FAILURE TO TIMELY SUBMIT A WRITTEN HEARING REQUEST WILL RESULT IN AUTOMATIC TERM
       { term: 'Cessation of Housing Assistance Payments (HAP)', plainMeaning: 'The government stops paying your landlord, meaning you would immediately owe the full market rent and face eviction.' }
     ],
     level1Summary: {
-      plainEnglish: `The Housing Authority is trying to cancel your rent voucher on November 30 because you missed a paperwork deadline for proving your income. If this happens, your landlord will demand full market rent and you could face eviction. You have a legal right to stop this immediately by requesting an "Informal Hearing" before November 24, 2026. Once you ask for the hearing, your voucher CANNOT be stopped until the hearing takes place.`,
+      plainEnglish: `The housing office wants to stop your rent help on November 30. They say you sent your pay forms late. If they stop it, your landlord may ask for full rent. You could lose your home. But you can stop this now. Ask for a hearing before November 24, 2026. Once you ask, they can't stop your help until the hearing is done.`,
       bulletPoints: [
         'Notice: Intent to terminate your rent voucher subsidy.',
         'Why: Missing employer income paperwork from your October review.',
@@ -539,3 +540,10 @@ Yours sincerely,
     ]
   }
 ];
+
+// Reading grades are measured with the same Flesch-Kincaid formula the engine uses, not hand-entered.
+export const SCENARIOS: DocumentAnalysis[] = RAW_SCENARIOS.map((s) => ({
+  ...s,
+  readingGradeOriginal: calculateReadingGrade(s.rawText),
+  readingGradeSimplified: calculateReadingGrade(s.level1Summary.plainEnglish),
+}));

@@ -1,0 +1,8 @@
+Readability benchmark: original notice -> Ctrl+V Access plain-English summary
+Measured with the app's Flesch-Kincaid engine AND the independent textstat 0.7.13 library
+
+scenario                        words    FK (app)  FK (textstat)  Dale-Chall    engine
+healthcare-denial     217 -> 65 (-70%)   18 -> 1     19.9 -> 1.6   14.9 -> 6.3  0.17 ms
+disability-pip        280 -> 72 (-74%)   13 -> 2.2   13.4 -> 2.0   11.8 -> 6.5  0.11 ms
+university-dsa        182 -> 73 (-60%)   18 -> 1     19.2 -> 1.2   14.4 -> 5.6  0.09 ms
+housing-assistance    211 -> 63 (-70%) 12.5 -> 1.7   17.5 -> 1.8   13.8 -> 5.8  0.08 ms

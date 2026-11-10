@@ -68,7 +68,7 @@ export function analyzePastedDocument(text: string): DocumentAnalysis {
   }
 
   // Detect deadline or time limits
-  const daysMatch = text.match(/(\d{1,2})\s*(?:calendar|business)?\s*days/i);
+  const daysMatch = text.match(/(\d{1,2})\)?\s*(?:calendar|business)?\s*days/i);
   const deadlineDays = daysMatch ? parseInt(daysMatch[1], 10) : 21;
   
   // Detect date patterns
@@ -106,7 +106,7 @@ export function analyzePastedDocument(text: string): DocumentAnalysis {
     : 'Issuing Authority / Agency';
 
   // Construct simplified plain English explanation
-  const plainEnglish = `This document from ${keyInstitution} contains important notices regarding your status or entitlements. It relies on strict administrative rules and formal criteria. You have ${deadlineDays} days to submit an appeal or response. With a structured reply, administrative determinations of this type are frequently challenged and re-assessed.`;
+  const plainEnglish = `This letter is from ${keyInstitution}. They made a choice that may change your care, money, or rights. You do not have to accept it. You can ask them to look again. You have ${deadlineDays} days to reply. Keep this letter safe.`;
 
   return {
     id: `custom-paste-${Date.now()}`,
@@ -117,7 +117,7 @@ export function analyzePastedDocument(text: string): DocumentAnalysis {
     deadline: deadlineStr,
     daysRemaining: deadlineDays,
     readingGradeOriginal: originalGrade,
-    readingGradeSimplified: 5.1,
+    readingGradeSimplified: calculateReadingGrade(plainEnglish),
     jargonTermsCount: Math.max(foundJargon.length, 6),
     jargonDictionary: foundJargon.length > 0 ? foundJargon : [
       { term: 'Formal Determination', plainMeaning: 'Official decision made by an agency caseworker.' },

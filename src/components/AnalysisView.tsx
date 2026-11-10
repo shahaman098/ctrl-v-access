@@ -37,6 +37,11 @@ export const AnalysisView: React.FC<AnalysisViewProps> = ({
   const [activeTab, setActiveTab] = useState<'clarity' | 'rights' | 'checklist' | 'appeal' | 'form' | 'raw'>('clarity');
   const [checklist, setChecklist] = useState<ChecklistItem[]>(document.level3Checklist);
 
+  // Synchronize checklist when selected document changes
+  React.useEffect(() => {
+    setChecklist(document.level3Checklist);
+  }, [document.id, document.level3Checklist]);
+
   // Update checklist item completion
   const toggleChecklist = (id: string) => {
     setChecklist(prev => prev.map(item => 

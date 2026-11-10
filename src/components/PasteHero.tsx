@@ -445,7 +445,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
                 </div>
 
                 <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-                  <span>Grade {scenario.readingGradeOriginal} → 5.0</span>
+                  <span>Grade {scenario.readingGradeOriginal} → {scenario.readingGradeSimplified}</span>
                   <span className="text-indigo-400 font-medium group-hover:translate-x-0.5 transition-transform">
                     Equalize →
                   </span>
