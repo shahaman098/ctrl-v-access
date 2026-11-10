@@ -92,7 +92,21 @@ with sync_playwright() as p:
     page.click("button:has-text('2. Your Legal Rights')")
     time.sleep(3)
     page.click("button:has-text('4. Auto-Drafted Appeal')")
-    time.sleep(4)
+    time.sleep(3)
+
+    # Step 14: Demonstrate Search Rights & Guidance Engine
+    page.evaluate("window.scrollTo({ top: 0, behavior: 'smooth' })")
+    time.sleep(2)
+    page.click("button:has-text('Search Rights & Guidance')")
+    time.sleep(2)
+    page.fill("#rights-search-input", "prescription")
+    time.sleep(2)
+    page.click("button:has-text('Equalize & Load') >> nth=0")
+    time.sleep(2)
+    page.evaluate("document.getElementById('analysis-section').scrollIntoView({ behavior: 'smooth' })")
+    time.sleep(3)
+    page.click("button:has-text('2. Your Legal Rights')")
+    time.sleep(3)
 
     # Final wrap-up view
     time.sleep(2)
@@ -100,3 +114,19 @@ with sync_playwright() as p:
     browser.close()
 
 print("Browser session closed. Video file written.")
+
+# Locate newest .webm file and convert to MP4
+video_files = [f for f in os.listdir('video') if f.endswith('.webm')]
+if video_files:
+    latest_webm = max([os.path.join('video', f) for f in video_files], key=os.path.getmtime)
+    output_mp4 = 'video/ctrl-v-access-demo.mp4'
+    print(f"Converting {latest_webm} to {output_mp4}...")
+    cmd = [
+        'ffmpeg', '-y', '-i', latest_webm,
+        '-c:v', 'libx264', '-preset', 'fast', '-crf', '22',
+        '-pix_fmt', 'yuv420p',
+        output_mp4
+    ]
+    subprocess.run(cmd, check=True)
+    print(f"Successfully generated {output_mp4}!")
+

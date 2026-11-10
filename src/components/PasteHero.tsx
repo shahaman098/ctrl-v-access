@@ -1,6 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Clipboard, Sparkles, AlertCircle, ArrowRight, CornerDownLeft, FileText } from 'lucide-react';
+import { 
+  Clipboard, 
+  Sparkles, 
+  ArrowRight, 
+  Search, 
+  FileText, 
+  Scale, 
+  X, 
+  SlidersHorizontal,
+  CheckCircle2
+} from 'lucide-react';
 import { SCENARIOS } from '../data/scenarios';
+import { SEARCH_DATABASE, SearchResultItem } from '../data/searchDatabase';
 import { DocumentAnalysis } from '../types';
 
 interface PasteHeroProps {
@@ -14,22 +25,26 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
   onSelectScenario,
   currentDocumentId 
 }) => {
+  const [activeMode, setActiveMode] = useState<'paste' | 'search'>('paste');
   const [inputText, setInputText] = useState('');
-  const [isHoveringPaste, setIsHoveringPaste] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [pasteNotice, setPasteNotice] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Global window paste listener: triggers analysis when user hits Ctrl+V anywhere
   useEffect(() => {
     const handleGlobalPaste = (e: ClipboardEvent) => {
       // Don't intercept if user is typing inside an input other than our textarea
       const target = e.target as HTMLElement;
-      if (target && target.tagName === 'INPUT') return;
+      if (target && target.tagName === 'INPUT' && target.id !== 'document-paste-area') return;
 
       const pastedData = e.clipboardData?.getData('text');
       if (pastedData && pastedData.trim().length > 30) {
         setInputText(pastedData);
         onAnalyze(pastedData);
+        setActiveMode('paste');
         setPasteNotice('Detected Ctrl+V! Equalizing your document...');
         setTimeout(() => setPasteNotice(null), 3000);
       }
@@ -45,6 +60,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
       if (text && text.trim().length > 0) {
         setInputText(text);
         onAnalyze(text);
+        setActiveMode('paste');
         setPasteNotice('Pasted from clipboard! Equalizing...');
         setTimeout(() => setPasteNotice(null), 3000);
       } else {
@@ -53,6 +69,7 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
       }
     } catch {
       // If browser clipboard permission blocked, focus the textarea
+      setActiveMode('paste');
       if (textareaRef.current) {
         textareaRef.current.focus();
         setPasteNotice('Please press Ctrl+V / Cmd+V directly in the box below.');
@@ -65,6 +82,31 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
     e.preventDefault();
     if (inputText.trim().length > 0) {
       onAnalyze(inputText);
+    }
+  };
+
+  // Filter search results
+  const filteredSearchResults = SEARCH_DATABASE.filter(item => {
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    if (!matchesCategory) return false;
+
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase().trim();
+    return (
+      item.title.toLowerCase().includes(q) ||
+      item.summary.toLowerCase().includes(q) ||
+      item.statutoryAuthority.toLowerCase().includes(q) ||
+      item.keywords.some(k => k.toLowerCase().includes(q))
+    );
+  });
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (filteredSearchResults.length > 0) {
+      onSelectScenario(filteredSearchResults[0].documentAnalysis);
+    } else if (searchQuery.trim().length > 0) {
+      // Generate custom analysis from search query
+      onAnalyze(`INQUIRY REGARDING STATUTORY CITIZEN RIGHTS & ENTITLEMENTS: ${searchQuery}\n\nUser is requesting assistance understanding official criteria, reasonable adjustments, appeal rights, and statutory deadlines regarding: ${searchQuery}.`);
     }
   };
 
@@ -85,35 +127,57 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
         </h1>
 
         <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-          Hit <kbd className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-indigo-300 font-mono text-sm shadow-sm">Ctrl+V</kbd> with any medical bill, disability denial, university accommodation refusal, or legal notice. Instantly receive <strong>5th-grade clarity</strong>, <strong>statutory rights</strong>, <strong>voice narration</strong>, and a <strong>ready-to-send winning appeal</strong>.
+          Hit <kbd className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-indigo-300 font-mono text-sm shadow-sm">Ctrl+V</kbd> with any medical bill, disability denial, university accommodation refusal, or search official citizen rights. Instantly receive <strong>5th-grade clarity</strong>, <strong>statutory rights</strong>, <strong>voice narration</strong>, and a <strong>ready-to-send winning appeal</strong>.
         </p>
       </div>
 
-      {/* Main Paste Box */}
+      {/* Main Container with Mode Switcher */}
       <div 
-        className="relative bg-slate-900/90 rounded-2xl border-2 border-dashed border-indigo-500/50 hover:border-indigo-400 transition-all p-6 shadow-2xl backdrop-blur-xl group"
+        className="relative bg-slate-900/90 rounded-2xl border-2 border-indigo-500/50 hover:border-indigo-400 transition-all p-6 shadow-2xl backdrop-blur-xl group"
       >
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-105 transition-transform">
-              <Clipboard className="w-5 h-5" aria-hidden="true" />
-            </div>
-            <div>
-              <h2 className="text-base font-semibold text-white">Paste Any Inaccessible Document</h2>
-              <p className="text-xs text-slate-400">
-                Press <span className="text-indigo-300 font-mono">Ctrl+V</span> anywhere, or click Paste below
-              </p>
-            </div>
+        {/* Mode Selector Tabs */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-800">
+          <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+            <button
+              type="button"
+              onClick={() => setActiveMode('paste')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                activeMode === 'paste'
+                  ? 'bg-indigo-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              aria-pressed={activeMode === 'paste'}
+            >
+              <Clipboard className="w-4 h-4" aria-hidden="true" />
+              <span>Paste Document (Ctrl+V)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveMode('search');
+                setTimeout(() => searchInputRef.current?.focus(), 100);
+              }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                activeMode === 'search'
+                  ? 'bg-indigo-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              aria-pressed={activeMode === 'search'}
+            >
+              <Search className="w-4 h-4" aria-hidden="true" />
+              <span>Search Rights & Guidance</span>
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleManualPasteClick}
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all focus-visible:ring-2 focus-visible:ring-indigo-300"
-              aria-label="Paste text from your computer clipboard"
+              className="flex items-center gap-2 px-4 py-2 bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 border border-indigo-500/40 rounded-xl text-xs font-semibold shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-indigo-300"
+              aria-label="Paste text from computer clipboard"
             >
-              <Clipboard className="w-4 h-4" aria-hidden="true" />
+              <Clipboard className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />
               <span>Paste from Clipboard</span>
             </button>
           </div>
@@ -131,50 +195,187 @@ export const PasteHero: React.FC<PasteHeroProps> = ({
           </div>
         )}
 
-        {/* Textarea Form */}
-        <form onSubmit={handleFormSubmit} className="space-y-4">
-          <label htmlFor="document-paste-area" className="sr-only">
-            Paste bureaucratic, medical, or legal text here
-          </label>
-          <textarea
-            id="document-paste-area"
-            ref={textareaRef}
-            rows={5}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Paste your dense denial letter, NHS decision, university notice, or benefit rejection here..."
-            className="w-full bg-slate-950/70 border border-slate-800 rounded-xl p-4 text-slate-200 placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 font-mono transition-colors resize-y leading-relaxed"
-          />
+        {/* MODE 1: PASTE VIEW */}
+        {activeMode === 'paste' && (
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <label htmlFor="document-paste-area" className="sr-only">
+              Paste bureaucratic, medical, or legal text here
+            </label>
+            <textarea
+              id="document-paste-area"
+              ref={textareaRef}
+              rows={5}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Paste your dense denial letter, NHS decision, university notice, or benefit rejection here..."
+              className="w-full bg-slate-950/70 border border-slate-800 rounded-xl p-4 text-slate-200 placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 font-mono transition-colors resize-y leading-relaxed"
+            />
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-            <div className="flex items-center gap-2 text-xs text-slate-400">
-              <kbd className="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono text-[11px]">
-                Ctrl + V
-              </kbd>
-              <span>Instant Universal Equalizer Trigger</span>
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+              <div className="flex items-center gap-2 text-xs text-slate-400">
+                <kbd className="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-slate-300 font-mono text-[11px]">
+                  Ctrl + V
+                </kbd>
+                <span>Instant Universal Equalizer Trigger</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {inputText.trim().length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setInputText('')}
+                    className="px-3 py-1.5 text-xs text-slate-400 hover:text-white transition-colors"
+                  >
+                    Clear Box
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  disabled={inputText.trim().length === 0}
+                  className="flex items-center gap-1.5 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg shadow-emerald-600/20 transition-all focus-visible:ring-2 focus-visible:ring-emerald-400"
+                >
+                  <span>Decode & Equalize</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+
+        {/* MODE 2: SEARCH RIGHTS & GUIDANCE VIEW */}
+        {activeMode === 'search' && (
+          <div className="space-y-4">
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <label htmlFor="rights-search-input" className="sr-only">
+                Search statutory citizen rights, regulations, and entitlements
+              </label>
+              <div className="relative flex items-center">
+                <Search className="w-5 h-5 text-indigo-400 absolute left-4 pointer-events-none" aria-hidden="true" />
+                <input
+                  id="rights-search-input"
+                  ref={searchInputRef}
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search condition or statute (e.g., 'glucose monitor', 'PIP 0 points', 'warm home', 'free prescription')..."
+                  className="w-full bg-slate-950/80 border border-indigo-500/40 rounded-xl py-3.5 pl-12 pr-28 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-24 p-1 text-slate-400 hover:text-white transition-colors"
+                    aria-label="Clear search query"
+                  >
+                    <X className="w-4 h-4" aria-hidden="true" />
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  className="absolute right-2 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow transition-colors"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+
+            {/* Quick Keyword Filter Chips */}
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              <span className="text-[11px] font-semibold text-slate-400 mr-1 flex items-center gap-1">
+                <SlidersHorizontal className="w-3 h-3 text-indigo-400" aria-hidden="true" />
+                Quick filter:
+              </span>
+              {[
+                { label: 'All', value: 'all' },
+                { label: 'Healthcare', value: 'healthcare' },
+                { label: 'Disability', value: 'disability' },
+                { label: 'Education', value: 'education' },
+                { label: 'Housing', value: 'housing' },
+                { label: 'Employment', value: 'employment' }
+              ].map(cat => (
+                <button
+                  key={cat.value}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat.value)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-colors ${
+                    selectedCategory === cat.value
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
             </div>
 
-            <div className="flex items-center gap-2">
-              {inputText.trim().length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setInputText('')}
-                  className="px-3 py-1.5 text-xs text-slate-400 hover:text-white transition-colors"
-                >
-                  Clear Box
-                </button>
-              )}
-              <button
-                type="submit"
-                disabled={inputText.trim().length === 0}
-                className="flex items-center gap-1.5 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold shadow-lg shadow-emerald-600/20 transition-all focus-visible:ring-2 focus-visible:ring-emerald-400"
+            {/* Live Search Results List */}
+            <div 
+              role="region" 
+              aria-label="Search results" 
+              className="mt-4 space-y-2.5 max-h-[360px] overflow-y-auto pr-1"
+            >
+              <div 
+                role="status" 
+                aria-live="polite" 
+                className="text-[11px] text-slate-400 pb-1"
               >
-                <span>Decode & Equalize</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+                Showing {filteredSearchResults.length} statutory guidance & rights cases:
+              </div>
+
+              {filteredSearchResults.length > 0 ? (
+                filteredSearchResults.map(item => (
+                  <div
+                    key={item.id}
+                    onClick={() => onSelectScenario(item.documentAnalysis)}
+                    className="p-3.5 bg-slate-950/70 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-indigo-300">
+                          {item.category}
+                        </span>
+                        <span className="text-[11px] font-mono text-emerald-400">
+                          {item.statutoryAuthority}
+                        </span>
+                      </div>
+                      <h3 className="text-xs sm:text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">
+                        {item.summary}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectScenario(item.documentAnalysis);
+                      }}
+                      className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600/30 group-hover:bg-indigo-600 text-indigo-200 group-hover:text-white rounded-lg text-xs font-semibold transition-all"
+                    >
+                      <span>Equalize & Load</span>
+                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <div className="p-6 text-center bg-slate-950/40 border border-slate-800/80 rounded-xl">
+                  <p className="text-xs text-slate-400 mb-3">
+                    No exact statutory match found for "{searchQuery}".
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleSearchSubmit({ preventDefault: () => {} } as any)}
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-colors"
+                  >
+                    Analyze "{searchQuery}" as Custom Citizen Inquiry
+                  </button>
+                </div>
+              )}
             </div>
           </div>
-        </form>
+        )}
       </div>
 
       {/* Pre-loaded Benchmark Scenarios for Instant 1-Click Evaluation */}

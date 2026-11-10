@@ -50,7 +50,11 @@ flowchart TD
 
 ## 🚀 Key Features
 
-### 1. Multi-Tier Equalizer Architecture
+### 1. Dual Entry: Global Ctrl+V Clipboard & Statutory Rights Search
+- **Global Keyboard Paste (`Ctrl+V` / `⌘+V`):** Paste any document or denial notice anywhere on screen for instant parsing and equalizing.
+- **Statutory Rights Search Engine:** Search a verified database of citizen rights, regulations, and entitlements (NICE guidelines, PIP scoring regulations, Equality Act accommodations, HUD fair housing rules, free prescription exemptions, and Access to Work grants) by keyword, condition, or government body.
+
+### 2. Multi-Tier Equalizer Architecture
 - **Level 1: 5th-Grade Plain English:** Strips bureaucratic padding, calculating live Flesch-Kincaid grade level reduction (e.g., Grade 16.4 down to Grade 5.1). Surfaces a 30-second bottom line and a demystified jargon dictionary.
 - **Level 2: Statutory Rights Discovery:** Identifies the governing statutory framework (e.g. *NHS Constitution*, *NICE Guideline NG17*, *Equality Act 2010 Part 6*, *HUD 24 C.F.R. § 982.555*) and highlights hidden entitlements (e.g. automatic stay of eviction, free prescription exemption, companion passes).
 - **Level 3: Action Roadmap & Progress Meter:** Checkable step-by-step resolution tasks with required document tags and exportable checklist.

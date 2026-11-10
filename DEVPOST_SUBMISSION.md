@@ -22,7 +22,10 @@ When we saw the **Ctrl+V Hackathon** prompt—transferring information fast to i
 **Ctrl+V Access** turns the clipboard into a universal assistive equalizing bridge:
 
 1. **Global Keyboard Trigger (Ctrl+V / ⌘+V):** The user pastes an intimidating document or denial notice anywhere on screen.
-2. **5-Tier Equalizer Architecture:**
+2. **Dual-Input Architecture (Ctrl+V Paste + Instant Rights Search):**
+   - **Global Clipboard Trigger:** The user pastes an intimidating document or denial notice anywhere on screen (`Ctrl+V` / `⌘+V`).
+   - **Statutory Rights & Guidance Search Engine:** In addition to pasting documents, citizens can instantly search our curated statutory rights knowledge base (covering NICE medical guidelines, DWP PIP regulations, Equality Act educational accommodations, Section 8 HUD hearing procedures, NHS FP92A medical exemption prescriptions, and UK Access to Work grants) by condition, keyword, or government department.
+3. **5-Tier Equalizer Architecture:**
    - **Level 1: 5th-Grade Plain English:** Strips bureaucratic posturing, provides a 30-second bottom-line summary, and features a demystified jargon dictionary.
    - **Level 2: Statutory Rights & Legal Protections:** Uncovers governing statutory protections, relevant regulations, and hidden entitlements (such as automatic stays of eviction, prescription exemptions, or travel concessions).
    - **Level 3: Action Roadmap & Progress Meter:** Provides an interactive checklist of exact steps to take, evidence to gather, and progress tracking.
